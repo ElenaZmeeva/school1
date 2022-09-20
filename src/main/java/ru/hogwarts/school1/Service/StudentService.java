@@ -1,49 +1,53 @@
 package ru.hogwarts.school1.Service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school1.Repository.StudentRepository;
 import ru.hogwarts.school1.model.Student;
-
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.List;
+
 
 @Service
     public class StudentService {
+        private final StudentRepository studentRepository;
 
-        private final HashMap<Long, Student> students = new HashMap<>();
-        private long id=0;
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
 
+    }
 
-        public Student createStudent (Student student){
-            student.setId(++id);
-            students.put(student.getId(), student);
-            return student;
+    public Student createStudent (Student student){
+            return studentRepository.save(student);
         }
         public Student readStudent (long id){
-            return students.get(id);
+            return studentRepository.findById(id).orElse(null);
         }
 
         public Student updateStudent (Student student){
-            if(!students.containsKey(id)){
-                return null;
-            }
-            students.put(id,student);
-            return student;
+            return studentRepository.save(student);
         }
 
-        public Student deleteStudent (long id){
-            return students.remove(id);
+        public void deleteStudent (long id){
+           studentRepository.deleteById(id);
         }
 
         public Collection<Student> studentsByAge(int age) {
-            ArrayList<Student> result= new ArrayList<>();
-            for (Student student: students.values()){
-                if(Objects.equals(student.getAge(),age)){
-                    result.add(student);
-                }
-            }
-            return result;
+            return studentRepository.findByAge(age);
         }
 
+    public Collection<Student> findByAgeBetween(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
     }
+
+    public long getStudentAmount(){
+       return studentRepository.getStudentAmount();
+    }
+
+    public double getAverageAge(){
+        return studentRepository.getAverageAge();
+    }
+
+    public List<Student> getLastStudents(){
+        return studentRepository.getLastStudents();
+    }
+}

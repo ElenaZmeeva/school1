@@ -17,7 +17,7 @@ List<Student> findByAgeBetween( int min, int max);
     long getStudentAmount();
 
 @Query(value = "SELECT AVG (age) AS avg FROM student", nativeQuery = true)
-    int getAverageAge();
+    double getAverageAge();
 
 @Query(value = "SELECT * FROM student ORDER BY id DESC LIMIT 5 ", nativeQuery = true)
     List<Student> getLastStudents();

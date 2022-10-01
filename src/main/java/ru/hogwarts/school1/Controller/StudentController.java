@@ -1,24 +1,15 @@
 package ru.hogwarts.school1.Controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school1.Service.StudentService;
-import ru.hogwarts.school1.model.Avatar;
 import ru.hogwarts.school1.model.Student;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
     @RequestMapping("/student")
@@ -37,10 +28,10 @@ import java.util.List;
             }
             return ResponseEntity.ok (Collections.emptyList());
         }
-    @GetMapping
-    public ResponseEntity<Collection<Student>> getByAgeBetween (@RequestParam int min,
+        @GetMapping
+        public ResponseEntity<Collection<Student>> getByAgeBetween (@RequestParam int min,
                                                                 @RequestParam int max){
-        return ResponseEntity.ok(studentService.findByAgeBetween(min,max));
+            return ResponseEntity.ok(studentService.findByAgeBetween(min,max));
     }
 
         @GetMapping("{id}")
@@ -85,5 +76,16 @@ import java.util.List;
         @GetMapping("/last_students")
         public List<Student> getLastStudents (){
             return studentService.getLastStudents();
+        }
+
+
+        @GetMapping("/names")
+        public List<Student> studentsNameBeginA (){
+            return studentService.studentsNameBeginA();
+        }
+
+        @GetMapping("/average_age")
+        public OptionalDouble studentsAverageAge(){
+            return studentService.studentsAverageAge();
         }
     }

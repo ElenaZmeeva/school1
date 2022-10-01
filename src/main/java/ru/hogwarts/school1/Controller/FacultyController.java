@@ -9,7 +9,7 @@ import ru.hogwarts.school1.model.Faculty;
 import java.util.Collection;
 import java.util.Collections;
 
-@RestController
+    @RestController
     @RequestMapping("/faculty")
     public class FacultyController {
 
@@ -19,14 +19,20 @@ import java.util.Collections;
             this.facultyService = facultyService;
         }
 
-        @GetMapping
-        public ResponseEntity<Collection<Faculty>> getAllFacultiesByColor (@RequestParam String color){
+        @GetMapping("/color")
+        public ResponseEntity<Collection<Faculty>> getAllFacultiesByColor (@PathVariable String color){
             if(color!= null&& !color.isBlank()){
                 return ResponseEntity.ok (facultyService.findByColor(color));
             }
             return ResponseEntity.ok(Collections.emptyList());
         }
-
+        @GetMapping
+        public ResponseEntity<Collection<Faculty>> getAllFacultiesByColorOrName( @PathVariable String nameOrColor){
+            if(nameOrColor!= null&& !nameOrColor.isBlank()){
+                return ResponseEntity.ok (facultyService.findByNameIgnoreCaseOrColorIgnoreCase(nameOrColor));
+    }
+            return ResponseEntity.ok(Collections.emptyList());
+}
 
 
         @GetMapping("{id}")
@@ -53,7 +59,18 @@ import java.util.Collections;
         }
 
         @DeleteMapping("{id}")
-        public Faculty deleteFaculty (@PathVariable Long id){
-            return facultyService.deleteFaculty(id);
+        public ResponseEntity deleteFaculty (@PathVariable Long id){
+           facultyService.deleteFaculty(id);
+            return ResponseEntity.ok().build();
+        }
+
+        @GetMapping("/name")
+        public String longestFacultyName(@PathVariable String name){
+            return   facultyService.longestFacultyName(name);
+        }
+
+        @GetMapping("/number")
+        public Integer sum ( ){
+            return facultyService.sum();
         }
 }

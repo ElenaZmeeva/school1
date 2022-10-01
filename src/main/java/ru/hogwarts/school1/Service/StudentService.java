@@ -7,6 +7,8 @@ import ru.hogwarts.school1.Repository.StudentRepository;
 import ru.hogwarts.school1.model.Student;
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -24,23 +26,23 @@ import java.util.List;
         logger.info("Was invoked method for create student");
             return studentRepository.save(student);
         }
-        public Student readStudent (long id){
-            logger.info("Was invoked method for find student");
+    public Student readStudent (long id){
+         logger.info("Was invoked method for find student");
             return studentRepository.findById(id).orElse(null);
         }
 
-        public Student updateStudent (Student student){
-            logger.info("Was invoked method for update student");
+    public Student updateStudent (Student student){
+         logger.info("Was invoked method for update student");
             return studentRepository.save(student);
         }
 
-        public void deleteStudent (long id){
-            logger.info("Was invoked method for delete student");
+    public void deleteStudent (long id){
+        logger.info("Was invoked method for delete student");
            studentRepository.deleteById(id);
         }
 
-        public Collection<Student> studentsByAge(int age) {
-            logger.info("Was invoked method for find student by age");
+    public Collection<Student> studentsByAge(int age) {
+        logger.info("Was invoked method for find student by age");
             return studentRepository.findByAge(age);
         }
 
@@ -63,4 +65,24 @@ import java.util.List;
         logger.info("Was invoked method for get last students");
         return studentRepository.getLastStudents();
     }
+
+    public List<Student> studentsNameBeginA (){
+        Student student= new Student();
+
+        return studentRepository.findAll()
+                .stream()
+                .filter((s -> s.getName().contains("A")))
+                .sorted()
+                .collect(Collectors.toList());
+}
+
+    public OptionalDouble studentsAverageAge(){
+    Student student= new Student();
+
+        return studentRepository.findAll()
+            .stream()
+            .mapToInt(Student::getAge)
+            .average();
+}
+
 }

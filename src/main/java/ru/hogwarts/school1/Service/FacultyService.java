@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 @Service
     public class FacultyService {
 
-    Logger logger= LoggerFactory.getLogger(FacultyService.class);
+    private final Logger logger= LoggerFactory.getLogger(FacultyService.class);
 
     private final FacultyRepository facultyRepository;
 
@@ -51,9 +51,7 @@ import java.util.stream.Stream;
         return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(nameOrColor, nameOrColor);
     }
 
-    public String longestFacultyName(String name){
-        Faculty faculty= new Faculty();
-
+    public String longestFacultyName(){
       return   facultyRepository.findAll()
                 .stream()
                 .map(Faculty::getName)
@@ -64,6 +62,7 @@ import java.util.stream.Stream;
 
     public Integer sum(){
          Integer sum = Stream.iterate(1, a->a+1)
+                .parallel()
                 .limit(1_000_000)
                 .reduce(0,(a,b)->a+b);
          return sum;

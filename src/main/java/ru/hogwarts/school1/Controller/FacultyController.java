@@ -20,14 +20,14 @@ import java.util.Collections;
         }
 
         @GetMapping("/color")
-        public ResponseEntity<Collection<Faculty>> getAllFacultiesByColor (@PathVariable String color){
+        public ResponseEntity<Collection<Faculty>> getAllFacultiesByColor (@RequestParam String color){
             if(color!= null&& !color.isBlank()){
                 return ResponseEntity.ok (facultyService.findByColor(color));
             }
             return ResponseEntity.ok(Collections.emptyList());
         }
         @GetMapping
-        public ResponseEntity<Collection<Faculty>> getAllFacultiesByColorOrName( @PathVariable String nameOrColor){
+        public ResponseEntity<Collection<Faculty>> getAllFacultiesByColorOrName( @RequestParam String nameOrColor){
             if(nameOrColor!= null&& !nameOrColor.isBlank()){
                 return ResponseEntity.ok (facultyService.findByNameIgnoreCaseOrColorIgnoreCase(nameOrColor));
     }
@@ -65,8 +65,8 @@ import java.util.Collections;
         }
 
         @GetMapping("/name")
-        public String longestFacultyName(@PathVariable String name){
-            return   facultyService.longestFacultyName(name);
+        public String longestFacultyName(){
+            return   facultyService.longestFacultyName();
         }
 
         @GetMapping("/number")

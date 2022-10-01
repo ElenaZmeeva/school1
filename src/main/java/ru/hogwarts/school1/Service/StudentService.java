@@ -7,14 +7,13 @@ import ru.hogwarts.school1.Repository.StudentRepository;
 import ru.hogwarts.school1.model.Student;
 import java.util.Collection;
 import java.util.List;
-import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 
 @Service
     public class StudentService {
 
-    Logger logger= LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger= LoggerFactory.getLogger(StudentService.class);
         private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
@@ -66,23 +65,20 @@ import java.util.stream.Collectors;
         return studentRepository.getLastStudents();
     }
 
-    public List<Student> studentsNameBeginA (){
-        Student student= new Student();
-
+    public List<String> studentsNameBeginA (){
         return studentRepository.findAll()
                 .stream()
                 .filter((s -> s.getName().contains("A")))
+                .map(s -> s.getName().toUpperCase())
                 .sorted()
                 .collect(Collectors.toList());
 }
 
-    public OptionalDouble studentsAverageAge(){
-    Student student= new Student();
-
+    public double studentsAverageAge(){
         return studentRepository.findAll()
             .stream()
-            .mapToInt(Student::getAge)
-            .average();
+            .mapToDouble(Student::getAge)
+            .average().orElse(0);
 }
 
 }

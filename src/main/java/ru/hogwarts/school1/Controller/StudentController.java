@@ -80,12 +80,12 @@ import java.util.OptionalDouble;
 
 
         @GetMapping("/names")
-        public List<Student> studentsNameBeginA (){
+        public List<String> studentsNameBeginA (){
             return studentService.studentsNameBeginA();
         }
 
         @GetMapping("/average_age")
-        public OptionalDouble studentsAverageAge(){
+        public double studentsAverageAge(){
             return studentService.studentsAverageAge();
         }
     }

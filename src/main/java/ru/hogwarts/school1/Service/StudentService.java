@@ -81,4 +81,46 @@ import java.util.stream.Collectors;
             .average().orElse(0);
 }
 
+    public void  allStudentsWithThread(){
+        printStudents(1);
+        printStudents(2);
+
+    new Thread(()->{
+        printStudents(3);
+        printStudents(4);
+    }).start();
+
+    new Thread(()->{
+        printStudents(5);
+        printStudents(6);
+    }).start();
+
+}
+    public void printStudents(long id){
+        studentRepository.findById(id);
+    System.out.println("Student" + id+ "Count"+ count);
+}
+    public Integer count=0;
+    public void printStudentsSynchronized(long id){
+        synchronized (Student.class){
+            printStudents(id);
+            count++;
+        }
+    }
+
+    public void  allStudentsWithSynchronized() {
+        printStudentsSynchronized(1);
+        printStudentsSynchronized(2);
+
+        new Thread(() -> {
+            printStudentsSynchronized(3);
+            printStudentsSynchronized(4);
+        }).start();
+
+        new Thread(() -> {
+            printStudentsSynchronized(5);
+            printStudentsSynchronized(6);
+        }).start();
+    }
+
 }

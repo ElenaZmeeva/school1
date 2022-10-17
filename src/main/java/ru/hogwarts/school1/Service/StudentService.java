@@ -98,13 +98,12 @@ import java.util.stream.Collectors;
 }
     public void printStudents(long id){
         studentRepository.findById(id);
-    System.out.println("Student" + id+ "Count"+ count);
+    System.out.println("Student" + id);
 }
-    public Integer count=0;
+
     public void printStudentsSynchronized(long id){
-        synchronized (Student.class){
+        synchronized (this){
             printStudents(id);
-            count++;
         }
     }
 

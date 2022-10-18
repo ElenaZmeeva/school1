@@ -101,25 +101,19 @@ import java.util.stream.Collectors;
     System.out.println("Student" + id);
 }
 
-    public void printStudentsSynchronized(long id){
+    public void printStudentsSynchronized(long id1, long id2){
         synchronized (this){
-            printStudents(id);
+            printStudents(id1);
+            printStudents(id2);
         }
     }
 
     public void  allStudentsWithSynchronized() {
-        printStudentsSynchronized(1);
-        printStudentsSynchronized(2);
+        printStudentsSynchronized(1,2);
 
-        new Thread(() -> {
-            printStudentsSynchronized(3);
-            printStudentsSynchronized(4);
-        }).start();
+        new Thread(() -> printStudentsSynchronized(3,4)).start();
 
-        new Thread(() -> {
-            printStudentsSynchronized(5);
-            printStudentsSynchronized(6);
-        }).start();
+        new Thread(() -> printStudentsSynchronized(5,6)).start();
     }
 
 }

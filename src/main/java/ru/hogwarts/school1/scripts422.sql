@@ -1,3 +1,11 @@
+CREATE TABLE car
+(
+    id INTEGER PRIMARY KEY,
+    brand TEXT NOT NULL,
+    model TEXT NOT NULL,
+    price NUMERIC
+);
+
 CREATE TABLE person
 (
     id      INTEGER,
@@ -7,10 +15,3 @@ CREATE TABLE person
     car_id INTEGER REFERENCES car(id)
 );
 
-CREATE TABLE car
-(
-    id INTEGER PRIMARY KEY,
-    brand TEXT NOT NULL,
-    model TEXT NOT NULL,
-    price NUMERIC
-);
